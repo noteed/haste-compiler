@@ -16,7 +16,7 @@ module Haste.Graphics.Canvas (
   -- Rendering pictures, extracting data from a canvas
   render, renderOnTop, buffer, toDataURL,
   -- Working with colors and opacity
-  setStrokeColor, setFillColor, color, opacity, lineWidth,
+  setStrokeColor, setStrokeWidth, setFillColor, color, opacity, lineWidth,
   -- Matrix operations
   translate, scale, rotate,
   -- Using shapes
@@ -313,6 +313,11 @@ withContext f = Picture $ \ctx -> f ctx
 setStrokeColor :: Color -> Picture ()
 setStrokeColor c = Picture $ \(Ctx ctx) -> do
   setProp' (Elem ctx) "strokeStyle" (color2JSString c)
+
+-- | Set a new width for strokes.
+setStrokeWidth :: Double -> Picture ()
+setStrokeWidth w = Picture $ \(Ctx ctx) -> do
+  setProp' (Elem ctx) "lineWidth" (toJSString w)
 
 -- | Set a new fill color.
 setFillColor :: Color -> Picture ()
